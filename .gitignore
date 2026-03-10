@@ -1,0 +1,13 @@
+hardware-configuration.nix
+config/mozilla
+
+result
+result-*
+
+*.backup
+*~
+.*.swp
+
+secrets/
+*.age
+*.secret
