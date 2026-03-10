@@ -20,7 +20,7 @@
     enable = true;
     shellAliases = {
       ll = "ls -la";
-      update = "sudo nixos-rebuild switch --flake ~/#wyatt";
+      update = "sudo nixos-rebuild switch --flake ~/dotfiles/nixos/#wyatt";
     };
     shellInit = ''
       set fish_greeting

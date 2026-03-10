@@ -1,4 +1,3 @@
-
 { config, lib, pkgs, ... }:
 
 {
@@ -14,13 +13,6 @@
     efiSupport = true;
     useOSProber = true;
     default = 0;
-    extraEntries = ''
-    menuentry "CachyOS" {
-      search --set=root --fs-uuid 7246bc39-e5e0-45ac-b33c-ecd2e59c8ab0
-      configfile /grub/grub.cfg
-    }
-    '';
-
   };
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -55,8 +47,26 @@
     fastfetch
     ly
     efibootmgr
-    os-prober
+    os-prober 
+    yazi  
   ];
+
+  systemd.user.services.nixos-config-autopush = {
+    description = "Auto-push dotfiles to GitHub";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash /home/wyatt/dotfiles/auto-push.sh";
+    };
+  };
+
+  systemd.user.timers.nixos-config-autopush = {
+    description = "Timer for auto-pushing dotfiles on boot";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5min";
+      Persistent = true;
+    };
+  };
 
   system.stateVersion = "25.11"; # Did you read the comment?
 
