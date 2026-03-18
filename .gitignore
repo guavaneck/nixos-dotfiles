@@ -11,3 +11,5 @@ result-*
 secrets/
 *.age
 *.secret
+
+nixos/packages.nix

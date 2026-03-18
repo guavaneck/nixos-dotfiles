@@ -4,6 +4,7 @@
   imports =
     [  
      ./hardware-configuration.nix
+     ./packages.nix
     ];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -20,9 +21,27 @@
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/New_York";
-  
-  services.pipewire.enable = false;
-  services.pulseaudio.enable = true;
+
+  services.pulseaudio.enable = false;
+
+  security.rtkit.enable = true; 
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+
+  services.pipewire.extraConfig.pipewire."92-low-latency" = {
+    "context.properties" = {
+      "default.clock.rate" = 48000;
+      "default.clock.quantum" = 32;
+      "default.clock.min-quantum" = 32;
+      "default.clock.max-quantum" = 32;
+    };
+  };
+
   services.displayManager.ly.enable = true;
 
   users.users.wyatt = {
@@ -36,8 +55,9 @@
 
   programs.fish.enable = true;
   programs.firefox.enable = true;
-  programs.niri.enable = true; 
+  programs.niri.enable = true;
 
+  
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
@@ -46,9 +66,8 @@
     fuzzel
     fastfetch
     ly
-    efibootmgr
-    os-prober 
-    yazi  
+    pavucontrol 
+    yazi 
   ];
 
   systemd.user.services.nixos-config-autopush = {

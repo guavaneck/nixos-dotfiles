@@ -10,10 +10,10 @@
     neofetch
   ];
 
-  programs.git = {
+  programs.git.settings = {
     enable = true;
-    userName = "guavaneck";
-    userEmail = "wszyjka@charlotte.edu";
+    user.name = "guavaneck";
+    user.email = "wszyjka@charlotte.edu";
   };
   
   programs.fish = {
