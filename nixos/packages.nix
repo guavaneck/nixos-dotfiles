@@ -7,5 +7,7 @@
     xdg-desktop-portal-gtk
     brightnessctl 
     neovim
+    rustc
+    cargo
   ];
 }
